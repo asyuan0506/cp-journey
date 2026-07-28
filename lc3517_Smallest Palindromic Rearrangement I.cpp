@@ -27,7 +27,7 @@ public:
         // return ans;
 
         const int n = s.length();
-        for (int i = 0; i < n / 2; i++)
+        for (int i = 0; i < n / 2; i++) // If length is odd, middle char stays.
             cnt[s[i] - 'a']++;
 
         int j = 0;
