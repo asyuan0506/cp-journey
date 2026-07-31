@@ -7,18 +7,15 @@ public:
         // If next position isn't visited && not last position -> cycle
         for (int i = 0; i < 4; i++)
         {
+            visited[r][c] = true; // Label here it's ok, because if visit again -> cycle
             int nxt_r = r + dir_r[i];
             int nxt_c = c + dir_c[i];
             if (nxt_r < 0 || nxt_c < 0 || nxt_r >= grid.size() || nxt_c >= grid[0].size() || 
                 (nxt_r == last_r && nxt_c == last_c)) 
                 continue;
             if (grid[nxt_r][nxt_c] == grid[r][c])
-            {
-                if (visited[nxt_r][nxt_c])
-                    return true;
-                
-                visited[nxt_r][nxt_c] = true;
-                if (dfs(nxt_r, nxt_c, visited, grid, r, c))
+            {         
+                if (visited[nxt_r][nxt_c] || dfs(nxt_r, nxt_c, visited, grid, r, c))
                     return true;
             }
         }
@@ -28,16 +25,9 @@ public:
         vector<vector<bool>> visited(grid.size(), vector<bool> (grid[0].size(), false));
         
         for (int i = 0; i < grid.size(); i++)
-        {
             for (int j = 0; j < grid[0].size(); j++)
-            {
-                if (!visited[i][j])
-                {
-                    visited[i][j] = true;
-                    if (dfs(i, j, visited, grid, i, j)) return true;
-                }
-            }
-        }
+                if (!visited[i][j] && dfs(i, j, visited, grid, i, j))
+                    return true;
         return false;   
     }
 };
