@@ -82,3 +82,45 @@ int main()
     return 0;
 }
 
+// #include <bits/stdc++.h>
+
+// using namespace std;
+
+// bool cmp(pair<int, int> a, pair<int, int> b)
+// {
+//     return a.first > b.first;
+// }
+
+// int main()
+// {
+//     int N;
+//     cin >> N;
+//     while (N--)
+//     {
+//         int floors;
+//         cin >> floors;
+//         vector<pair<int, int>> v(floors);
+//         for (int i = 0; i < floors; i++)
+//         {
+//             int floor;
+//             cin >> floor;
+//             if (floor < 0)
+//                 v[i] = { -floor, 0 };
+//             else
+//                 v[i] = { floor, 1 };
+//         }
+//         sort(v.begin(), v.end(), cmp);
+//         int mx = 0, last = -2;
+//         for (int i = 0; i < floors; i++)
+//         {
+//             if (last != v[i].second)
+//             {
+//                 mx++;
+//                 last = v[i].second;
+//             }
+//         }
+//         cout << mx << "\n";
+//     }
+
+//     return 0;
+// }
