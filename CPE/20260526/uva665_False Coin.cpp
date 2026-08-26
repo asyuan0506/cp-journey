@@ -2,31 +2,29 @@
 
 using namespace std;
 
-bool possible(int coin, bool heavier, vector<vector<vector<int>>> &weights)
+struct weighting 
+{
+    vector<int> left;
+    vector<int> right;
+    char op;
+};
+
+bool possible(int coin, bool heavier, vector<weighting> &weights)
 {
     for (int i = 0; i < weights.size(); i++)
     {
-        int op = weights[i][2][0];
         int left = 0, right = 0;
-        for (int c : weights[i][0])
-        {
-            if (c == coin)
+        for (int c : weights[i].left)
+            if (coin == c)
                 left = heavier? 1 : -1;
-        }
-        for (int c : weights[i][1])
-        {
-            if (c == coin)
+        for (int c : weights[i].right)
+            if (coin == c)
                 right = heavier? 1 : -1;
-        }
-        if (op == 0 && left != right) // Same
-        {
+        if (weights[i].op == '=' && left != right) 
             return false;
-        }
-        if (op == 1 && left <= right)
-        {
+        else if (weights[i].op == '>' && left <= right)
             return false;
-        }
-        if (op == 2 && left >= right)
+        else if (weights[i].op == '<' && left >= right)
             return false;
     }
     return true;
@@ -43,7 +41,9 @@ int main()
         first = false;
         int n, k;
         cin >> n >> k;
-        vector<vector<vector<int>>> weights(k, vector<vector<int>> (3)); // [i][0]: left, [i][1]: right, [i][2]: operator
+
+        vector<weighting> weights(k);
+        
         for (int i = 0; i < k; i++)
         {
             int c;
@@ -53,15 +53,10 @@ int main()
                 cin >> left[i];
             for (int i = 0; i < c; i++)
                 cin >> right[i];
-            char op;
-            cin >> op;
-            int op_int;
-            if (op == '=') op_int = 0;
-            else if (op == '>') op_int = 1;
-            else if (op == '<') op_int = 2;
-            weights[i][0] = left;
-            weights[i][1] = right;
-            weights[i][2].push_back(op_int);
+            
+            weights[i].left = left;
+            weights[i].right = right;
+            cin >> weights[i].op;
         }
         int possibles = 0;
         int false_coin = -1;
